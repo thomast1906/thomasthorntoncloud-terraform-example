@@ -70,12 +70,12 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
+        tf_actions_working_dir: "./terraform"
+      env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-        tf_actions_working_dir: "./terraform"
-
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
@@ -88,19 +88,16 @@ jobs:
       #   tf_actions_working_dir: "./terraform"
 
     # Generates an execution plan for Terraform
-    - name: "Terraform Plan"
-      uses: hashicorp/terraform-github-actions@master
+    - name: Terraform Plan
+      run: terraform plan
       with:
-        tf_actions_version: 0.12.13
-        tf_actions_subcommand: "plan"
         tf_actions_working_dir: "./terraform"
-        tf_actions_comment: true
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-        tf_actions_working_dir: "./terraform"
+
 
 
 
