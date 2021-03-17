@@ -74,6 +74,7 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+        tf_actions_working_dir: "./terraform"
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
@@ -83,14 +84,13 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
-      with:
-        tf_actions_working_dir: "./terraform"
+      # with:
+      #   tf_actions_working_dir: "./terraform"
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan
-      with:
-        tf_actions_working_dir: "./terraform"
+
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
