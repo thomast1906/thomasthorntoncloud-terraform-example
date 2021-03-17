@@ -83,18 +83,24 @@ jobs:
       with:
         tf_actions_subcommand: 'init'
         tf_actions_working_dir: "./terraform"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: 'Terraform Validate'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_subcommand: 'validate'
         tf_actions_working_dir: "./terraform"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: 'Terraform Plan'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_subcommand: 'plan'
         tf_actions_working_dir: "./terraform"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
