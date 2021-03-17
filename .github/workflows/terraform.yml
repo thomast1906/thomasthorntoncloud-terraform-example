@@ -53,6 +53,11 @@ on:
 jobs:
   terraform:
     name: 'Terraform'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
     environment: production
 
@@ -71,11 +76,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         tf_actions_working_dir: "./terraform"
-      env:
-        ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
@@ -92,11 +93,11 @@ jobs:
       run: terraform plan
       with:
         tf_actions_working_dir: "./terraform"
-      env:
-        ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      # env:
+      #   ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      #   ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      #   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      #   ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
 
 
 
