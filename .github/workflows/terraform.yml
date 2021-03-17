@@ -91,8 +91,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan
-      with:
-        tf_actions_working_dir: "./terraform"
+
       # env:
       #   ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       #   ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
