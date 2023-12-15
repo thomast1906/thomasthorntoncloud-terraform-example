@@ -1,16 +1,14 @@
 terraform {
+  required_version = ">= 1.5.7"
   backend "azurerm" {
-    resource_group_name  = "tamopstfstates"
-    storage_account_name = "tfstatedevops"
-    container_name       = "terraformgithubexample"
-    key                  = "terraformgithubexample.tfstate"
+    resource_group_name  = "thomasthorntoncloud"
+    storage_account_name = "thomasthorntontfstate"
+    container_name       = "github-thomasthorntoncloud-terraform-example"
+    key                  = "github-thomasthorntoncloud-terraform-example.tfstate"
   }
 }
 
 provider "azurerm" {
-  # The "feature" block is required for AzureRM provider 2.x.
-  # If you're using version 1.x, the "features" block is not allowed.
-  version = "~>2.0"
   features {}
 }
 
@@ -18,15 +16,15 @@ data "azurerm_client_config" "current" {}
 
 #Create Resource Group
 resource "azurerm_resource_group" "tamops" {
-  name     = "tamops"
-  location = "eastus2"
+  name     = "github-thomasthorntoncloud-terraform-example"
+  location = "uksouth"
 }
 
 #Create Virtual Network
 resource "azurerm_virtual_network" "vnet" {
   name                = "tamops-vnet"
   address_space       = ["192.168.0.0/16"]
-  location            = "eastus2"
+  location            = "uksouth"
   resource_group_name = azurerm_resource_group.tamops.name
 }
 
@@ -35,6 +33,6 @@ resource "azurerm_subnet" "subnet" {
   name                 = "subnet"
   resource_group_name  = azurerm_resource_group.tamops.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefix       = "192.168.0.0/24"
+  address_prefixes     = ["192.168.0.0/24"]
 }
   
